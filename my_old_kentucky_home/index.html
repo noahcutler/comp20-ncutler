@@ -1,47 +1,3 @@
-Last login: Thu Mar  3 16:26:32 on ttys000
-Noahs-MacBook-Pro-3:~ gibson37$ cd comp20-ncutler
-Noahs-MacBook-Pro-3:comp20-ncutler gibson37$ ls
-my_old_kentucky_homeresponsive
-Noahs-MacBook-Pro-3:comp20-ncutler gibson37$ cd my_old_kentucky_home
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ ls
-index.htmlindex.html~
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ emacs index.html
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ emacs index.html
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ emacs index.html
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ emacs index.html
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ 
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ emacs index.html
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ git add index.html
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ git add style.css
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ git commit -m "first sttempt at karaoke w/ minimal styling"
-[responsive 6da513b] first sttempt at karaoke w/ minimal styling
- Committer: Noah Cutler <gibson37@Noahs-MacBook-Pro-3.local>
-Your name and email address were configured automatically based
-on your username and hostname. Please check that they are accurate.
-You can suppress this message by setting them explicitly. Run the
-following command and follow the instructions in your editor to edit
-your configuration file:
-
-    git config --global --edit
-
-After doing this, you may fix the identity used for this commit with:
-
-    git commit --amend --reset-author
-
- 2 files changed, 42 insertions(+)
- create mode 100644 my_old_kentucky_home/index.html
- create mode 100644 my_old_kentucky_home/style.css
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ git push -u origin master
-To git@github.com:tuftsdev/comp20-ncutler.git
- ! [rejected]        master -> master (fetch first)
-error: failed to push some refs to 'git@github.com:tuftsdev/comp20-ncutler.git'
-hint: Updates were rejected because the remote contains work that you do
-hint: not have locally. This is usually caused by another repository pushing
-hint: to the same ref. You may want to first integrate the remote changes
-hint: (e.g., 'git pull ...') before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-Noahs-MacBook-Pro-3:my_old_kentucky_home gibson37$ emacs index.html
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,3 +20,17 @@ The young folks roll on the little cabin floor, \n
 </div>
 
 <script>
+  var i =0;
+  var line = setInterval(karaoke, 1000);
+  function karaoke()
+  {
+     var larr =  document.getElementById("lyrics").split("\n");
+     i++;
+     document.getElementById("lyrics").innerHTML = larr[i-1];
+  }
+
+</script>
+</body>
+</html>
+
+
