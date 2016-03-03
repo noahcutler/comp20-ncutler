@@ -10,23 +10,17 @@
 
 <h1 id="title">My Old Kentucky Home</h1>
 
-<video src="https://www.cs.tufts.edu/comp/20/my_old_kentucky_home.mp4" id="musi\
-c_video" controls></video>
-<div id="lyrics">The sun shines bright in My Old Kentucky Home, \n
-'Tis summer, the people are gay; \n
-The corn-top's ripe and the meadow's in the bloom \n
-While the birds make music all the day. \n
-The young folks roll on the little cabin floor, \n
-</div>
+<video src="https://www.cs.tufts.edu/comp/20/my_old_kentucky_home.mp4" id="music_video" controls></video>
+
+<div id="lyrics"></div>
 
 <script>
-  var i =0;
-  var line = setInterval(karaoke, 1000);
-  function karaoke()
+  var larr = ["The sun shines bright in My Old Kentucky Home,","'Tis summer, the people are gay;","The corn-top's ripe and the meadow's in the bloom","While the birds make music all the day.","The young folks roll on the little cabin floor,","All merry, all happy and bright;","By 'n' by hard times comes a knocking at the door,","Then My Old Kentucky Home, good night!","Chorus","Weep no more my lady","Oh weep no more today;","We will sing one song","For My Old Kentucky Home","For My Old Kentucky Home, far away"];
+  var i=0;
+  var line = setInterval(karaoke(larr[i++]), 1000);
+  function karaoke(line)
   {
-     var larr =  document.getElementById("lyrics").split("\n");
-     i++;
-     document.getElementById("lyrics").innerHTML = larr[i-1];
+     document.getElementById("lyrics").write(line);
   }
 
 </script>
