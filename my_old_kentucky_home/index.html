@@ -15,13 +15,14 @@
 <div id="lyrics"></div>
 
 <script>
-  var larr = ["The sun shines bright in My Old Kentucky Home,","'Tis summer, the people are gay;","The corn-top's ripe and the meadow's in the bloom","While the birds make music all the day.","The young folks roll on the little cabin floor,","All merry, all happy and bright;","By 'n' by hard times comes a knocking at the door,","Then My Old Kentucky Home, good night!","Chorus","Weep no more my lady","Oh weep no more today;","We will sing one song","For My Old Kentucky Home","For My Old Kentucky Home, far away"];
+  var larr = ["","The sun shines bright in My Old Kentucky Home,","'Tis summer, the people are gay;","The corn-top's ripe and the meadow's in the bloom","While the birds make music all the day.","The young folks roll on the little cabin floor,","All merry, all happy and bright;","By 'n' by hard times comes a knocking at the door,","Then My Old Kentucky Home, good night!","Chorus","Weep no more my lady","Oh weep no more today;","We will sing one song","For My Old Kentucky Home","For My Old Kentucky Home, far away"];
   var i=0;
-  var line = setInterval(karaoke(larr[i++]), 1000);
-  function karaoke(line)
+  var line = setInterval(karaoke, 6500);
+  function karaoke()
   {
-     document.getElementById("lyrics").write(line);
-  }
+     document.getElementById("lyrics").innerHTML = larr[i];
+     i++;
+ }
 
 </script>
 </body>
