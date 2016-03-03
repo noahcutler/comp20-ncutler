@@ -1,0 +1,10 @@
+#title {
+  font-family: Helvetica Neue;
+  font-weight: bold;
+  font-color: blue;
+  }
+#lyrics{
+  font font-family: Helvetica Neue;
+  
+}
+
