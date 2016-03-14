@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<h1>Land-marker</h1>
+
 <div id="mapapp"></div>
 
 </body>
