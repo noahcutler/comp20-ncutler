@@ -6,6 +6,11 @@
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
   <link rel="stylesheet" href="style.css"/>
   <script>
+  	var pin;
+  	var cpin;
+  	var response;
+  	var ppl;
+  	var lndmrk;
 	var lat = 0;
 	var lonj = 0;
  	var urhere = new google.maps.LatLng(lat, lonj);
@@ -31,6 +36,7 @@
  		else {
 					alert("Geolocation is not supported by your web browser Bummer ;)");
 		}
+		sendLocation();
  	}
  	
  	function renderMap(){
@@ -57,28 +63,28 @@
 		xml .setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xml.onreadystatechange = function(){
 			if(xml.readyState == 4 && xml.status == 200){
-				var response = JSON.parse(xml.responseText);
-				var ppl = response.people;
-				var lndmrk = response.landmarks;
+				response = JSON.parse(xml.responseText);
+				ppl = response.people;
+				lndmrk = response.landmarks;
 				showPPL();
 				showLOC();
 			}
 		}
 		xml.send(DSP);
+
 	}
 	function showPPL(){
 		for(i=0;i<ppl.length;i++){
-			person = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
+			person = new google.maps.LatLng(ppl[i].lat ppl[i].lng);
+			console.log(person);
 			if (ppl[i].login == username){
-				var pin = new google.maps.Marker({
-						position: person,
-						icon: myIMAGE,
+				pin = new google.maps.Marker({
+						position: person[i],
 						title:ppl[i].login,});
 			}
 			else{
-				var cpin = new google.maps.Marker({
+				cpin = new google.maps.Marker({
 						position: person,
-						icon: classIMAGE,
 						title:ppl[i].login,});
 			}
 		}
