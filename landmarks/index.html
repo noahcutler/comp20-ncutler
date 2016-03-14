@@ -3,15 +3,59 @@
 
 <head>
   <title>Assignment 2</title>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
   <link rel="stylesheet" href="style.css"/>
-  <script src="maps.js"></script>
+  <script>
+	var lat = 0;
+	var lonj = 0;
+ 	var xml = new XMLHttpRequest();
+ 	var urhere = new google.maps.LatLng(lat, lonj);
+ 	var map;
+ 	var marker;
+ 	var inisett = {
+ 					zoom:15,
+ 					center: urhere,
+ 					mapTypeId: google.maps.MapTypeId.ROADMAP
+ 	};
+ 	function letsstart() {
+ 		map = new google.maps.Map(document.getElementById("mapapp"), inisett);
+				getMyLocation();
+ 	}
+ 	function getMyLocation() {
+ 		if (navigator.geolocation) {
+ 			navigator.geolocation.getCurrentPosition(function(position) {
+						lat = position.coords.latitude;
+						lonj = position.coords.longitude;
+						renderMap();
+			});
+ 		}
+ 		else {
+					alert("Geolocation is not supported by your web browser Bummer ;)");
+		}
+ 	}
+ 	
+ 	function renderMap(){
+			urhere = new google.maps.LatLng(lat, lonj);
+			map.panTo(urhere);
+			marker = new google.maps.Marker({
+				position: urhere,
+				title: "You are here!"
+			});
+			marker.setMap(map);
+			google.maps.event.addListener(marker, 'click', function() {
+				infowindow.setContent(marker.title);
+				infowindow.open(map, marker);
+			});
+	}
 
+
+console.log([lat, lonj, urhere])
+</script>
 </head>
 
-<body>
-<h1>Land-marker</h1>
-<div id="mapapp"></div>
-
+<body onload="letsstart()">
+	<h1>Land-marker</h1>
+	<div id="mapapp"></div>
 </body>
 
 
