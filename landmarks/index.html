@@ -7,7 +7,8 @@
   <link rel="stylesheet" href="style.css"/>
   <script>
   	var pin;
-  	var cpin;
+  	var cpin = [];
+  	var lpin;
   	var myIMG = new Image();
   	//	myIMG.src = "myIMG.png";
   	var classIMG = new Image();
@@ -48,12 +49,11 @@
 			map.panTo(urhere);
 			marker = new google.maps.Marker({
 				position: urhere,
+				title: username,
 			});
 			marker.setMap(map);
 			google.maps.event.addListener(marker, 'click', function() {
-				var infowindow = new google.maps.InfoWindow({
-						content: person.login});
-				console.log(infowindow.content);
+				var infowindow = new google.maps.InfoWindow();
 				infowindow.setContent(marker.title);
 				infowindow.open(map, marker);
 			});
@@ -62,7 +62,6 @@
 	/*Datastore API*/
 	var xml = new XMLHttpRequest();
 	var username = "GOLDIE_TALLEY"
-	var person;
 	function sendLocation(){
 		xml.open("POST", "https://defense-in-derpth.herokuapp.com/sendLocation", true);
 		var DSP = 'login='+ username + '&lat='+lat +'&lng='+lonj;
@@ -73,37 +72,54 @@
 				ppl = response.people;
 				lndmrk = response.landmarks;
 				showPPL();
-				showLOC();
+				showLMK();
 			}
 		}
 		xml.send(DSP);
 
 	}
 	function showPPL(){
+		var place;
 		for(i=0;i<ppl.length;i++){
-			person = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
+			place = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
 			if (ppl[i].login == username){
 				pin = new google.maps.Marker({
-						position: person,
-						//icon: myIMG,
-						title:ppl[i].login,});
+						position: place,
+						title:username,});
 				pin.setMap(map);
 			}
 			else{
-				cpin = new google.maps.Marker({
-						position: person,
-						//icon:  classIMG,
+				cpin[i] = new google.maps.Marker({
+						position: place,
 						title:ppl[i].login,});
-				cpin.setMap(map);
-
+				cpin[i].setMap(map);
 			}
+			google.maps.event.addListener(cpin[i], 'click', function() {
+				var cinfowindow = new google.maps.InfoWindow();
+
+					cinfowindow.setContent(cpin[i]);
+					cinfowindow.open(map, cpin[i]);
+			});
 		}
 	}
-	function showLOC(){
-
+	function showLMK(){}
+		/*for(i=0;i<lndmrk.length;i++){
+			pin = new google.maps.Marker({
+						position: person[i],
+						//icon: myIMG,
+						//title:lndmrk[i]});
+				google.maps.event.addListener(lpin, 'click', function() {
+				var linfowindow = new google.maps.InfoWindow({
+   						 content: lndmrk[i]});
+				linfowindow.open(map, cpin);
+				});
+				lpin.setMap(map);
+		}
+		
 
 
 	}
+	*/
 </script>
 </head>
 
