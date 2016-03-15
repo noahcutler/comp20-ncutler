@@ -8,6 +8,10 @@
   <script>
   	var pin;
   	var cpin;
+  	var myIMG = new Image();
+  	//	myIMG.src = "myIMG.png";
+  	var classIMG = new Image();
+  	//	classIMG.src = "classIMG.png";
   	var response;
   	var ppl;
   	var lndmrk;
@@ -44,10 +48,12 @@
 			map.panTo(urhere);
 			marker = new google.maps.Marker({
 				position: urhere,
-				title: "You are here!"
 			});
 			marker.setMap(map);
 			google.maps.event.addListener(marker, 'click', function() {
+				var infowindow = new google.maps.InfoWindow({
+						content: person.login});
+				console.log(infowindow.content);
 				infowindow.setContent(marker.title);
 				infowindow.open(map, marker);
 			});
@@ -75,17 +81,21 @@
 	}
 	function showPPL(){
 		for(i=0;i<ppl.length;i++){
-			person = new google.maps.LatLng(ppl[i].lat ppl[i].lng);
-			console.log(person);
+			person = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
 			if (ppl[i].login == username){
 				pin = new google.maps.Marker({
-						position: person[i],
+						position: person,
+						//icon: myIMG,
 						title:ppl[i].login,});
+				pin.setMap(map);
 			}
 			else{
 				cpin = new google.maps.Marker({
 						position: person,
+						//icon:  classIMG,
 						title:ppl[i].login,});
+				cpin.setMap(map);
+
 			}
 		}
 	}
