@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css"/>
   <script>
   	var pin;
-  	var cpin = [];
   	var lpin;
   	var myIMG = new Image();
   	//	myIMG.src = "myIMG.png";
@@ -82,36 +81,29 @@
 		var place;
 		for(i=0;i<ppl.length;i++){
 			place = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
-			if (ppl[i].login == username){
-				pin = new google.maps.Marker({
+			pin = new google.maps.Marker({
 						position: place,
-						title:username,});
-				pin.setMap(map);
-			}
-			else{
-				cpin[i] = new google.maps.Marker({
-						position: place,
-						title:ppl[i].login,});
-				cpin[i].setMap(map);
-			}
-			google.maps.event.addListener(cpin[i], 'click', function() {
-				var cinfowindow = new google.maps.InfoWindow();
-
-					cinfowindow.setContent(cpin[i]);
-					cinfowindow.open(map, cpin[i]);
-			});
+						title:ppl[i].login,
+				});
+			pin.setMap(map);
+			//google.maps.event.addListener(pin, 'click', function() {
+				var iinfowindow = new google.maps.InfoWindow();
+				iinfowindow.setContent(pin.title);
+				iinfowindow.open(map, pin);
+			//});
 		}
 	}
-	function showLMK(){}
-		/*for(i=0;i<lndmrk.length;i++){
-			pin = new google.maps.Marker({
-						position: person[i],
+	function showLMK(){
+		for(i=0;i<lndmrk.length;i++){
+			lplace = new google.maps.LatLng(lndmrk[i].lat, lndmrk[i].lng);
+			lpin = new google.maps.Marker({
+						position: lplace,
 						//icon: myIMG,
-						//title:lndmrk[i]});
+						title:lndmrk[i].Location_Name});
 				google.maps.event.addListener(lpin, 'click', function() {
-				var linfowindow = new google.maps.InfoWindow({
-   						 content: lndmrk[i]});
-				linfowindow.open(map, cpin);
+					var linfowindow = new google.maps.InfoWindow();
+					linfowindow.setContent(lpin.title);
+					linfowindow.open(map, lpin);
 				});
 				lpin.setMap(map);
 		}
@@ -119,7 +111,6 @@
 
 
 	}
-	*/
 </script>
 </head>
 
