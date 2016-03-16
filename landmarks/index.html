@@ -9,8 +9,11 @@
   	var myIMG = "https://lh6.googleusercontent.com/-yzs4LK-5XlM/AAAAAAAAAAI/AAAAAAAAAAA/gmrfEsPcY3o/photo.jpg"
   	var classIMG = "http://images2.fanpop.com/images/quiz/197000/197625_1240695767085_50.jpg?v=1240695793"
   	var lIMG = "https://s-media-cache-ak0.pinimg.com/custom_covers/30x30/381257993393581890_1443577669.jpg"
-  	var pin;
-  	var lpin;
+  	var landcont;
+  	var mecont;
+  	var classcont;
+  	var pin = [];
+  	var lpin = [];
   	var place;
   	var lplace;
   	var response;
@@ -83,36 +86,34 @@
 		for(i=0;i<ppl.length;i++){
 			
 			place = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
-			pin = new google.maps.Marker({
+			pin[i] = new google.maps.Marker({
 						position: place,
 						icon: classIMG,
 						title:ppl[i].login,
 				});
-			pin.setMap(map);
-			//google.maps.event.addListener(pin, 'click', function() {
+			pin[i].setMap(map);
+			 google.maps.event.addListener(pin[i], 'click', function() {
 				var iinfowindow = new google.maps.InfoWindow();
-				iinfowindow.setContent(pin.title);
-				iinfowindow.open(map, pin);
-			//});
+				iinfowindow.setContent(this.title + );
+				iinfowindow.open(map, this);
+			});
 		}
-	
 		
 		for(j=0;j<lndmrk.length;j++){
 			var LanLat = lndmrk[j].geometry.coordinates[0];
 			var LanLon = lndmrk[j].geometry.coordinates[1];
-			console.log(LanLat);
+			var linfowindow;
 			lplace = new google.maps.LatLng(LanLon, LanLat);
-			lpin = new google.maps.Marker({
+			lpin[i] = new google.maps.Marker({
 						icon: lIMG, 
 						title: lndmrk[j].properties.Location_Name,});
-			lpin.setPosition(lplace);
-			lpin.setMap(map);
-				google.maps.event.addListener(lpin, 'click', function() {
-					var linfowindow = new google.maps.InfoWindow();
-					linfowindow.setContent(lpin.title);
-					linfowindow.open(map, lpin);
+			lpin[i].setPosition(lplace);
+			lpin[i].setMap(map);
+				google.maps.event.addListener(lpin[i], 'click', function() {
+				    linfowindow = new google.maps.InfoWindow();
+					linfowindow.setContent(this.title);
+					linfowindow.open(map, this);
 				});
-			
 		}
 	}
 </script>
