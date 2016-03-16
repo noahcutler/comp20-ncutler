@@ -6,16 +6,17 @@
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
   <link rel="stylesheet" href="style.css"/>
   <script>
+  	var myIMG = "https://lh6.googleusercontent.com/-yzs4LK-5XlM/AAAAAAAAAAI/AAAAAAAAAAA/gmrfEsPcY3o/photo.jpg"
+  	var classIMG = "http://images2.fanpop.com/images/quiz/197000/197625_1240695767085_50.jpg?v=1240695793"
+  	var lIMG = "https://s-media-cache-ak0.pinimg.com/custom_covers/30x30/381257993393581890_1443577669.jpg"
   	var pin;
   	var lpin;
-  	var myIMG = new Image();
-  	//	myIMG.src = "myIMG.png";
-  	var classIMG = new Image();
-  	//	classIMG.src = "classIMG.png";
+  	var place;
+  	var lplace;
   	var response;
   	var ppl;
   	var lndmrk;
-	var lat = 0;
+	var lat = 0 ;
 	var lonj = 0;
  	var urhere = new google.maps.LatLng(lat, lonj);
  	var map;
@@ -40,7 +41,7 @@
  		else {
 					alert("Geolocation is not supported by your web browser Bummer ;)");
 		}
-		sendLocation();
+	
  	}
  	
  	function renderMap(){
@@ -48,6 +49,7 @@
 			map.panTo(urhere);
 			marker = new google.maps.Marker({
 				position: urhere,
+				icon: myIMG,
 				title: username,
 			});
 			marker.setMap(map);
@@ -56,11 +58,12 @@
 				infowindow.setContent(marker.title);
 				infowindow.open(map, marker);
 			});
+			sendLocation();
 	}
 
 	/*Datastore API*/
 	var xml = new XMLHttpRequest();
-	var username = "GOLDIE_TALLEY"
+	var username = "GOLDIE_TALLEY";
 	function sendLocation(){
 		xml.open("POST", "https://defense-in-derpth.herokuapp.com/sendLocation", true);
 		var DSP = 'login='+ username + '&lat='+lat +'&lng='+lonj;
@@ -70,19 +73,19 @@
 				response = JSON.parse(xml.responseText);
 				ppl = response.people;
 				lndmrk = response.landmarks;
-				showPPL();
-				showLMK();
+				show();
 			}
 		}
 		xml.send(DSP);
 
 	}
-	function showPPL(){
-		var place;
+	function show(){
 		for(i=0;i<ppl.length;i++){
+			
 			place = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
 			pin = new google.maps.Marker({
 						position: place,
+						icon: classIMG,
 						title:ppl[i].login,
 				});
 			pin.setMap(map);
@@ -92,24 +95,20 @@
 				iinfowindow.open(map, pin);
 			//});
 		}
-	}
-	function showLMK(){
-		for(i=0;i<lndmrk.length;i++){
-			lplace = new google.maps.LatLng(lndmrk[i].lat, lndmrk[i].lng);
+		for(j=0;j<lndmrk.length;j++){
+			lplace = new google.maps.LatLng(lndmrk[j].geometry.coordinates[0], lndmrk[j].geometry.coordinates[1]);
 			lpin = new google.maps.Marker({
-						position: lplace,
-						//icon: myIMG,
-						title:lndmrk[i].Location_Name});
-				google.maps.event.addListener(lpin, 'click', function() {
+						icon: lIMG, 
+						title: lndmrk[j].properties.Location_Name,});
+			lpin.setPosition(lplace);
+			lpin.setMap(map);
+				//google.maps.event.addListener(lpin, 'click', function() {
 					var linfowindow = new google.maps.InfoWindow();
 					linfowindow.setContent(lpin.title);
 					linfowindow.open(map, lpin);
-				});
-				lpin.setMap(map);
+				//});
+			
 		}
-		
-
-
 	}
 </script>
 </head>
