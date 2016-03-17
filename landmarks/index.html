@@ -59,7 +59,7 @@
 			marker.setMap(map);
 			google.maps.event.addListener(marker, 'click', function() {
 				var infowindow = new google.maps.InfoWindow();
-				infowindow.setContent(marker.title);
+				infowindow.setContent(marker.title + closest());
 				infowindow.open(map, marker);
 			});
 			sendLocation();
@@ -127,6 +127,9 @@
 					linfowindow.open(map, this);
 				});
 		}
+	}
+	function closest(){
+		
 	}
 </script>
 </head>
