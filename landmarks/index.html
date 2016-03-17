@@ -24,6 +24,7 @@
  	var urhere = new google.maps.LatLng(lat, lonj);
  	var map;
  	var marker;
+ 	var haver;
  	var inisett = {
  					zoom:15,
  					center: urhere,
@@ -84,7 +85,17 @@
 	}
 	function show(){
 		for(i=0;i<ppl.length;i++){
-			classcont = "HI";
+		        var radlat1 = Math.PI * ppl[i].lat/180
+    		    var radlat2 = Math.PI * lat/180
+    		    var radlon1 = Math.PI * ppl[i].lng/180
+        		var radlon2 = Math.PI * lonj/180
+        		var theta = ppl[i].lng-lonj
+        		var radtheta = Math.PI * theta/180
+        		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        		dist = Math.acos(dist)
+     		    dist = dist * 180/Math.PI
+    		    dist = dist * 60 * 1.1515
+			classcont = ' is ' + dist + " miles away";
 			place = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
 			pin[i] = new google.maps.Marker({
 						position: place,
