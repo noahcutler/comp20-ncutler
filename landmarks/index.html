@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Assignment 2</title>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <script>
+  	var myIMG = "https://lh6.googleusercontent.com/-yzs4LK-5XlM/AAAAAAAAAAI/AAAAAAAAAAA/gmrfEsPcY3o/photo.jpg"
+  	var classIMG = "http://images2.fanpop.com/images/quiz/197000/197625_1240695767085_50.jpg?v=1240695793"
+  	var lIMG = "https://s-media-cache-ak0.pinimg.com/custom_covers/30x30/381257993393581890_1443577669.jpg"
+  	var landcont;
+  	var mecont;
+  	var classcont;
+  	var pin = [];
+  	var lpin = [];
+  	var place;
+  	var lplace;
+  	var response;
+  	var ppl;
+  	var lndmrk;
+	var lat = 0 ;
+	var lonj = 0;
+ 	var urhere = new google.maps.LatLng(lat, lonj);
+ 	var map;
+ 	var marker;
+ 	var haver;
+ 	var inisett = {
+ 					zoom:15,
+ 					center: urhere,
+ 					mapTypeId: google.maps.MapTypeId.ROADMAP
+ 	};
+ 	function letsstart() {
+ 		map = new google.maps.Map(document.getElementById("mapapp"), inisett);
+				getMyLocation();
+ 	}
+ 	function getMyLocation() {
+ 		if (navigator.geolocation) {
+ 			navigator.geolocation.getCurrentPosition(function(position) {
+						lat = position.coords.latitude;
+						lonj = position.coords.longitude;
+						renderMap();
+			});
+ 		}
+ 		else {
+					alert("Geolocation is not supported by your web browser Bummer ;)");
+		}
+	
+ 	}
+ 	
+ 	function renderMap(){
+			urhere = new google.maps.LatLng(lat, lonj);
+			map.panTo(urhere);
+			marker = new google.maps.Marker({
+				position: urhere,
+				icon: myIMG,
+				title: username,
+			});
+			marker.setMap(map);
+			google.maps.event.addListener(marker, 'click', function() {
+				var infowindow = new google.maps.InfoWindow();
+				infowindow.setContent(marker.title + closest());
+				infowindow.open(map, marker);
+			});
+			sendLocation();
+	}
+
+	/*Datastore API*/
+	var xml = new XMLHttpRequest();
+	var username = "GOLDIE_TALLEY";
+	function sendLocation(){
+		xml.open("POST", "https://defense-in-derpth.herokuapp.com/sendLocation", true);
+		var DSP = 'login='+ username + '&lat='+lat +'&lng='+lonj;
+		xml .setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xml.onreadystatechange = function(){
+			if(xml.readyState == 4 && xml.status == 200){
+				response = JSON.parse(xml.responseText);
+				ppl = response.people;
+				lndmrk = response.landmarks;
+				show();
+			}
+		}
+		xml.send(DSP);
+
+	}
+	function show(){
+		for(i=0;i<ppl.length;i++){
+		        var radlat1 = Math.PI * ppl[i].lat/180
+    		    var radlat2 = Math.PI * lat/180
+    		    var radlon1 = Math.PI * ppl[i].lng/180
+        		var radlon2 = Math.PI * lonj/180
+        		var theta = ppl[i].lng-lonj
+        		var radtheta = Math.PI * theta/180
+        		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        		dist = Math.acos(dist)
+     		    dist = dist * 180/Math.PI
+    		    dist = dist * 60 * 1.1515
+			classcont = ' is ' + dist + " miles away";
+			place = new google.maps.LatLng(ppl[i].lat, ppl[i].lng);
+			pin[i] = new google.maps.Marker({
+						position: place,
+						icon: classIMG,
+						title:ppl[i].login,
+				});
+			pin[i].setMap(map);
+			 google.maps.event.addListener(pin[i], 'click', function() {
+				var iinfowindow = new google.maps.InfoWindow();
+				iinfowindow.setContent(this.title + classcont);
+				iinfowindow.open(map, this);
+			});
+		}
+		
+		for(j=0;j<lndmrk.length;j++){
+			var LanLat = lndmrk[j].geometry.coordinates[0];
+			var LanLon = lndmrk[j].geometry.coordinates[1];
+			var linfowindow;
+			landcont = lndmrk[j].properties.Details;
+			lplace = new google.maps.LatLng(LanLon, LanLat);
+			lpin[i] = new google.maps.Marker({
+						icon: lIMG, 
+						title: landcont,});
+			lpin[i].setPosition(lplace);
+			lpin[i].setMap(map);
+				google.maps.event.addListener(lpin[i], 'click', function() {
+				    linfowindow = new google.maps.InfoWindow();
+					linfowindow.setContent(this.title);
+					linfowindow.open(map, this);
+				});
+		}
+	}
+	function closest(){
+		
+	}
+</script>
+</head>
+
+<body onload="letsstart()">
+	<div id="mapapp"></div>
+</body>
+
+
+</html>

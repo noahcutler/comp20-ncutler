@@ -1,0 +1,68 @@
+<!DOCTYPE html> 
+
+<html>
+<head>
+<title>Security Assesment of Ross K's Code</title>
+
+
+</head>
+
+<body>
+<h1>Security Assesment of Ross K's Code</h1>
+
+	<h2>Introduction</h2>
+	<!-- Provide a description of the product and what you were hired to do -->
+		<p>This security assesment tests the vulnerabilities of a web app written by Ross Kamen. He has written client side javascript that allows the user to locate themselves on a map using the GoogleMaps API, and using HTTP POST /sendLocation, the user is able to send their login, latitude, and longitude. In return, they will be returned all of the locations and logins of previous checkins  and all of the historic landmarks within 1 mile of the user's checkin coordinates (controled using geospatial queries), stored using MongoDB.
+		 </p>
+		 <p>This app has several security flaws that deem it unsuitable for public use. Some of these vulnerabilities were unforseen, however some basic design features of the app present security concerns of their own. For example, the POST /sendLocation API requires no authentication, and therefore allows a nefarious client to post false information, like a fake login (identity theft is no joke!). This assesment explores the former type of security threat.  
+		 </p>
+
+	<h2>Methodology</h2> 
+<!-- Describe your methodology pen testing the application, including the tools that you used-->
+			<p>All testing/attacking was performed on Ross's database and Heroku web app.</p>
+			<p>In order to find three vulnerabilities, I did not have to venture far from the command line. Using the bash command curl, I was able to inject both HTML5 and javascript into the target database using the HTTP POST route /sendLocation. The third attack, a DdoS attack on the server, was carried out by infinite loop  that ran curl, sendinging POST requests, until the server overloaded.</p>
+
+
+	
+
+	<h2>Abstract of Findings</h2> 
+<!-- Provide an overview of all the security and privacy issues you identified. This section should be written for non-technical managers who do not have technical expertise and do not have time to read the entire document. Write this section using lay language.-->
+		<p>After a preliminary search, I found 3 security vulnerabilities. Please note that while I only found these three, more vulnerabilities may exist. I was able to exploit Ross's Assignment 3, namely his POST /sendLocation route. This allowed me to inject both HTML, which interfered with styling, and javascript, which displayed alerts on the client's computer upon entering the website and eventually redirects the page to Christian Rock band Creed's website. It also allowed me to overflow his server, by starting an infinite loop of POST requests to the server.</p>
+
+	<h2>Issues Found</h2> 
+		<ul>
+			<li><ul>
+			<li>Issue1: HTML Injection</li>
+			<li>Location: Assignment 3, HTTP POST /sendLocation</li>
+			<li>Severity of issue: High. Allows malicious users to interfere with styling/post unwanted messages. Relinquishes control of the page to whomever.</li>
+			<li>Description of Issue: When the homepage is rendered, it prints all of the checkins in a human-readable format. To exploit this, I used the bash command curl to input a checkin, but instead of a genuine login, I inserted HTML within quotes, so that the web browser would read that login string as HTML code rather than a simple string-login name.</li>
+<!--IMAGES-->
+			<li>Resolution: In order to protect against this type of attack, check that the login information is valid (i.e. no special characters, add an authentication process, etc.)</li>
+			</ul></li>
+
+			<li><ul>
+			<li>Issue2: Cross Site Scripting</li>
+			<li>Location: Assignment 3, HTTP POST /sendLocation</li>
+			<li>Severity of issue: High. Allows malicious clients to post alerts/messages and compromise the usability of the web app.</li>
+			<li>Description of Issue: This issue is locatred in the same place as the first issue, but injecting javascript has different implications than injecting HTML. For example, redirecting the website upon loading renders the web app essentially useless because the client would not be able to sift through data and find the actual checkins in time.</li>
+<!--IMAGES-->
+			<li>Resolution: Because Cross-Site Scripting (XSS) are implemented the same way as HTML content injections, only with script tags, the solution to Issue 1 should also work to solve Issue 2.</li>
+		
+			<li><ul>
+			<li>Issue3: Server Overload</li>
+			<li>Location: Assignment 3, HTTP POST /sendLocation</li>
+			<li>Severity of issue: High, floods the webpage with false data and eventually overloads the server, rendering the web app useless.</li>
+			<li>Description of issue: I created a while loop that constantly inserted the same string (Lyrics from Billy Ocean's "Caribbean Queen (No More Love on the Run)") into the database. Eventually, the number of POST requests overloaded the server. While this issue occured in the same location as Issues 1 and 2, this attack targets the both the server side and the client side. The server is overloaded and the hompage is clutterd with unnecessary dummy data to the point that even if the server has not been overloaded yet, relevant data is virtually unreachable before the website is redirected.</li>
+<!--IMAGES-->
+			<li>Resolution: Preventing multiple (or some certain number) logins by a single user could prevent this.</li>
+			</ul></li>
+		</ul>
+
+	<h2>Conclusion</h2> 
+		<p>In order to better secure this web app, I suggest that a check be inserted into the POST /sendLocation route that ensures that login information is valid (contains no script/HTML/special characters). I also recommend that multiple checkins by a single user be prevented, as it allows malicious clients to flood the server and, on the client side (Assignment 2), a large number of checkins in the same location can clutter the map and negatively affect its usability. A more comprehensive attack could also be carried out that changes the location so that eventually, the entire map would be blacked-out by extraneous markers. Finally, I recommend an authentication process that requires users to prove their identity before they can post a checkin. Perhaps a simple password would suffice. </p>
+ 
+
+
+</body>
+
+</html>

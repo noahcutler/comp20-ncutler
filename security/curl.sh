@@ -1,0 +1,5 @@
+while (true)
+do
+    curl --data "login='<p>She's simply awesome</p>'&lat=40.6892&lng=-74.0445" http://frozen-springs-51164.herokuapp.com/sendLocation;
+
+done
