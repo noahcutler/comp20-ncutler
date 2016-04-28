@@ -58,11 +58,15 @@
 			<li>Location: Assignment 3, HTTP POST /sendLocation</li>
 			<li>Severity of issue: High. Allows malicious clients to post alerts/messages and compromise the usability of the web app.</li>
 			<li>Description of Issue: This issue is locatred in the same place as the first issue, but injecting javascript has different implications than injecting HTML. For example, redirecting the website upon loading renders the web app essentially useless because the client would not be able to sift through data and find the actual checkins in time.</li>
+<<<<<<< HEAD
 			<img src = "JavascriptInjectioncode.png" alt="XSS Code Screenshot">
 
 				<li><caption>-Javascript sent using bash command 'curl' via HTTP POST /sendLocation route.</caption></li>
 			<img src = "JavascriptInjection.png" alt="XSS Screenshot">
 				<li><caption>-Several alerts show up on the homepage upon loading. The page eventually redirects to Creed.com (Official website of Creed, the band).</caption></li>
+=======
+			<img src = "JavascriptInjectionCode.png" alt="XSS Code Screenshot">
+>>>>>>> master
 			
 			<caption>Javascript sent using bash command 'curl' via HTTP POST /sendLocation route.</caption>
 			<img src ="JavascriptInjection.png" alt="XSS Screenshot">
@@ -97,13 +101,17 @@
 
 			<h3>- In all three attacks, the scripts/HTML code/repeated string input were all stored in Ross's database 'checkins' as JSON data. Thus, to undo the damage done, Ross needs to clear his database and start anew.</h3>
 			<ul>
+<<<<<<< HEAD
 			<li><ul><img src = "Database.png" alt="JSON Screenshot">
 
 				</ul><caption>-You can see the malicious code stored in his MongoDB collections.</caption>
 				</li>
 
+=======
+			<img src = "Database.png" alt="JSON Screenshot">
+>>>>>>> master
 				<caption>You can see the malicious code stored in his MongoDB collections.</caption>
-				</ul></li>
+				
 			</ul>
 
 	<h2>Conclusion</h2> 
