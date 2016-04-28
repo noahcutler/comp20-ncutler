@@ -1,0 +1,13 @@
+body{
+	font-family: Helvetica;
+	background:blue;
+	color:white;
+}
+img{
+	 width:900px;
+	 height: 400px;
+}
+
+img.big{
+	height:700px;
+}
