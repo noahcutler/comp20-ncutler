@@ -79,7 +79,7 @@
 			<li>Description of issue: I created a while loop that constantly inserted the same string (Lyrics from Billy Ocean's "Caribbean Queen (No More Love on the Run)") into the database. Eventually, the number of POST requests overloaded the server. While this issue occured in the same location as Issues 1 and 2, this attack targets the both the server side and the client side. The server is overloaded and the hompage is clutterd with unnecessary dummy data to the point that even if the server has not been overloaded yet, relevant data is virtually unreachable before the website is redirected.</li>
 
 			<img src = "ServerOverloadFunc.png" alt="ServerOverload Screenshot"></li>
-				<li><caption>- curl.sh (a bash file), runs an infinite loop of HTTP POST requests via the /sendLocation route.</caption>
+			<li> <caption> - curl.sh (a bash file), runs an infinite loop of HTTP POST requests via the /sendLocation route.</caption></li>
 			<img class="big" src = "ServerOverloadCode.png" alt="ServerOverload Code Screenshot">
 			<li><caption>-Running './curl.sh' returns a continuous stream of JSON data. The web app is designed to respond to /sendLocation request with a big chunk of checkin and landmark data in JSON format.</caption></li>
 
