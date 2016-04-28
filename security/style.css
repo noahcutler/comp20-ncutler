@@ -3,7 +3,9 @@ body{
 	background:blue;
 	color:white;
 }
-
+caption{
+	text-align: center;
+}
 img{
 	 width:900px;
 	 height: 400px;
